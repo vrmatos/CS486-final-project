@@ -1,7 +1,60 @@
 <!Document html>
 <html>
 <body>
-<h1>CS486 Testing</h1>
-<p>I'm hosted with Github Pages.</p>
+
+<h1>CS486: Computer Graphics, Final Project</h1>
+<p>Author: Victoria Matos</p>
+
+<h2>The Concept</h2>
+<p>My original concept was to create a lake surrounded by procedural trees with a moon glowing with a bloom effect as the light 
+source that created shadows and reflected in a lake. I decided this was too ambitious and adapted my concept.</p>
+<p>My final concept is very similar to the original concept. I created a lake in the middle of a procedural terrain with a moon as the light source creating Shadows. 
+I was able to achieve the reflection concept via the Water object. Through the reflection used in Water.js, there is a warped reflection of the moon/terrain
+that changes based on the angles. Unfortunately, I found the Bloom effect to have errors in the code that I could not figure out how to fix. </p>
+<h4>Final Image</h4>
+<img src="final.png">
+
+<h2>Terrain</h2>
+<p>To begin, I decided to take my code from lab5: meshes_and_shading. In this lab, we had created a height field with a mesh and phong shading. 
+I knew I had to adapt the code in order to create random peaks that gave the effect of a terrain. I decided to use Perlin Noise in order to create the desired effect. 
+I spent hours trying to comprehend the Perlin Noise functions. Eventually, I realized I could achieve a similar, yet more crude, effect through the random function.  
+The peaks I achieved in the terrain had sharp peaks. In order to fix this, I implemented a smoothing function.</p>
+
+<h4>Smoothing</h4>
+<p>In order to smooth the sharp peaks, I saved the x,y,z values of each point into a double array. I smoothed over the array of randomly produced y values. 
+In order to do this, I had to take the average of every value around each y value (being cautious of points in the top/bottom or left/right of the array).
+I then adapted the y value to be 65% the original random value and 35% the new, smoothed value.</p>
+
+<h2>Water</h2>
+<p>In order to make room for the water, I had to first adapt the terrain to leave a flat space. I zeroed out the height for values within a certain range.
+Then, I created a Water object through the Water.js file from threejs.org/examples. This water object had a built-in reflection and texture component. This object 
+hovers slightly over the height field and is slightly larger than the zeroed space in the terrain. This way, it fills in between parts in the terrain giving the 
+lake a more natural shape.</p> 
+
+<h2>Moon</h2>
+<p>To make the moon, I used SphereBufferGeometry, TextureLoader to achieve the moon texture with an image, and a MeshBasicMaterial that would not be impacted by 
+light because I made the moon the light source. I adjusted the height so the sphere would hover over the lake/terrain. The main problem I had in this area was the 
+attempt with the Bloom effect. Additionally, I had to find a texure mapping that worked for me.</p>
+
+<h4>Texture Mapping</h4>
+<p>In order to achieve the moon texture, I took a texture map of the moon from solarsystemscope.com and used it with TextureLoader.load() in order to wrap it on the 
+sphere.</p>
+
+<h4>Lighting</h4>
+<p>I took out the Ambient Lighting that we have used on previous assignments and changed the PointLight to be positioned at the moon versus the camera. 
+This created shadow effects</p>
+
+<h2>General</h2>
+<p>I decided to change the PerspectiveCamera coordinates in order to have a better view of the scene. I added a Fog effect provided with the original Threejs code.</p>
+
+<h2>References</h2>
+<p>Water.js: https://github.com/mrdoob/three.js/blob/master/examples/js/objects/Water.js<br>
+waternormal.jpg: https://github.com/mrdoob/three.js/blob/master/examples/textures/waternormals.jpg<br>
+parts of water function: https://github.com/mrdoob/three.js/blob/master/examples/webgl_shaders_ocean.html<br>
+TextureLoader: https://threejs.org/docs/#api/en/loaders/TextureLoader<br>
+moon.png: https://www.solarsystemscope.com/textures/<br>
+forrest.png: https://www.emanueleferonato.com/2011/07/12/how-to-turn-your-own-photos-into-high-quality-seamless-textures-with-genetica/<br>
+Fog: https://threejs.org/docs/#api/en/scenes/Fog</p>
+
 </body>
 </html>
